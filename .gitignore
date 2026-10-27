@@ -1,0 +1,73 @@
+# ==========================================
+# Environment Variables & Secrets (Keep Safe)
+# ==========================================
+.env
+.env.*
+!.env.example
+*.env
+*.key
+*.pem
+*.cert
+secrets.json
+
+# ==========================================
+# Python & Bytecode
+# ==========================================
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+*.egg
+
+# ==========================================
+# Virtual Environments
+# ==========================================
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# ==========================================
+# Jupyter Notebooks
+# ==========================================
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# ==========================================
+# IDE & Editor Settings
+# ==========================================
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Operating System Files
+# ==========================================
+.DS_Store
+Thumbs.db
+ehthumbs.db
+[Dd]esktop.ini
+
+# ==========================================
+# AI / ML & Finance Data (Common large files)
+# ==========================================
+# Uncomment these if you don't want large datasets or models committed to git:
+# data/
+# *.csv
+# *.parquet
+# *.sqlite3
+# *.pkl
+# *.h5
+# *.pt
+# *.pth
+# *.onnx
