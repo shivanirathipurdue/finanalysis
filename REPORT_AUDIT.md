@@ -80,14 +80,26 @@ Audited against 10-K (Accession: `0000913142-26-000009`), 10-Q (Accession: `0000
 
 ---
 
-### B. Netflix Inc. (NFLX)
-Audited against 10-K (Accession: `0001065280-26-000034`), 10-Q (Accession: `0001065280-26-000291`), and 8-K Exhibit 99.1 (Accession: `0001065280-26-000290`, filed October 20, 2026).
+### B. Netflix Inc. (NFLX) — Partner Verification & Hand Sign-Off
+Audited by partner against 10-K (Accession: `0001065280-26-000034`), 10-Q (Accession: `0001065280-26-000291`), and 8-K Exhibit 99.1 (Accession: `0001065280-26-000290`, for the quarter ended September 30, 2026).
+
+> **Partner Hand-Check Verification**:
+> 1. **FY2025 Total Revenue**: $45,183,036,000 ($45.18B), for the year ended December 31, 2025 — Form 10-K, accession `0001065280-26-000034`, “Consolidated Statements of Operations” / Revenues.  
+>    **Mark: PASS** (Report matches filing)  
+>    SEC Filing: https://www.sec.gov/Archives/edgar/data/1065280/000106528026000034/nflx-20251231.htm
+>
+> 2. **Q3 2026 Results**: Revenue of $12,874,176,000 ($12.87B), up about 12% year over year; GAAP diluted EPS of $0.87 — Form 8-K, Exhibit 99.1, accession `0001065280-26-000290`, for the quarter ended September 30, 2026.  
+>    **Mark: PASS** (Report matches filing)  
+>    SEC Filing & Exhibit List: https://www.sec.gov/Archives/edgar/data/1065280/000106528026000290/0001065280-26-000290-index.htm  
+>    SEC 10-Q (Quarterly statement figures): https://www.sec.gov/Archives/edgar/data/1065280/000106528026000291/nflx-20260930.htm  
+>    *Audit Note: 12% used following Netflix’s rounded reported growth (underlying statement figures imply ~11.85%). GAAP diluted EPS label and $0.87 match filings.*
 
 | Core Claim | Report Value | Source Filing & Line / Tag | Mark | Partner Verification Hand Check |
 | :--- | :---: | :--- | :-: | :--- |
-| **Total Revenue (FY25)** | $45,183,036,000 | 10-K Item 8 / `Revenues` | **PASS** | Verified against 10-K Consolidated Statements of Operations. |
+| **Total Revenue (FY25)** | $45,183,036,000 | 10-K Item 8 / `Revenues` | **PASS** | Verified against 10-K Consolidated Statements of Operations ($45.18B). |
 | **Operating Income (FY25)** | $13,326,603,000 | 10-K Item 8 / `OperatingIncomeLoss` | **PASS** | Verified against 10-K operating income line. |
-| **Operating Margin (FY25)** | 29.49% | Code Calculator: `13,326,603,000 / 45,183,036,000` | **PASS** | Operating Income divided by Total Revenues. |
-| **Q3 Quarterly Revenue** | +12% YoY | 8-K Ex 99.1, page 1 | **PASS** | *"Revenue in Q3 grew 12% year over year (+11% on a foreign exchange (F/X) neutral basis)..."* |
+| **Operating Margin (FY25)** | 29.49% | Code Calculator: `13,326,603,000 / 45,183,036,000` | **PASS** | Operating Income divided by Total Revenues (29.49%). |
+| **Q3 Quarterly Revenue** | $12,874,176,000 (+12% YoY) | 8-K Ex 99.1 & 10-Q | **PASS** | *"Revenue in Q3 grew 12% year over year (+11% on an F/X neutral basis)..."* |
 | **Q3 Quarterly Diluted EPS** | $0.87 | 8-K Ex 99.1, page 1 | **PASS** | *"As a result, diluted EPS for the quarter amounted to $0.87 vs. $0.59 in Q3’25 (+49% year over year)."* |
+| **P/E (at $760.00)** | 300.40x | Code Calculator: `760.00 / 2.53` | **PASS** | Diluted EPS FY25 = $2.53. |
 | **Peer Operating Margins** | DIS 18.59%, CMCSA 16.71% | XBRL Facts (Same Definition) | **PASS** | DIS ($17.55B / $94.43B), CMCSA ($20.67B / $123.71B). |
