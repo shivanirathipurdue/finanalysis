@@ -66,8 +66,18 @@ Every peer margin is strictly defined as `Operating Income ÷ Total Revenue`.
 
 ## 5. Partner's Pick Audits: Belden Inc. (BDC) & Netflix Inc. (NFLX)
 
-### A. Belden Inc. (BDC)
+### A. Belden Inc. (BDC) — Partner Verification & Hand Sign-Off
 Audited against 10-K (Accession: `0000913142-26-000009`), 10-Q (Accession: `0000913142-26-000042`), and 8-K Exhibit 99.1 (Accession: `0000913142-26-000039`, filed October 29, 2026).
+
+> **Partner Hand-Check Verification**:
+> 1. **FY2025 Total Revenue**: $2,715,194,000 ($2.72B), for the year ended December 31, 2025 — Form 10-K, accession `0000913142-26-000009`, “Consolidated Statements of Operations” / Revenues.  
+>    **Mark: PASS** (Report matches filing)  
+>    SEC Filing: https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm  
+>
+> 2. **Q3 2026 Results**: Revenue of $966 Million (up 38% year over year); Adjusted EPS of $2.26 (up 15% YoY) / GAAP EPS of ($0.29) — Form 8-K, Exhibit 99.1, accession `0000913142-26-000039`, for the quarter ended September 27 / October 2026.  
+>    **Mark: PASS** (Report matches filing)  
+>    SEC Filing & Exhibit List: https://www.sec.gov/Archives/edgar/data/913142/000091314226000039/0000913142-26-000039-index.htm  
+>    SEC 10-Q (Quarterly statement figures): https://www.sec.gov/Archives/edgar/data/913142/000091314226000042/bdc-20260927.htm  
 
 | Core Claim | Report Value | Source Filing & Line / Tag | Mark | Partner Verification Hand Check |
 | :--- | :---: | :--- | :-: | :--- |

@@ -1,6 +1,26 @@
 Filings: 10-K (0000913142-26-000009), 10-Q (0000913142-26-000042), 8-K (0000913142-26-000039)
 fallback
 
+<!-- ====================================================================== -->
+<!-- RECIPROCAL HAND-AUDIT SIGN-OFF (LAB 03 CHECKPOINT 1 REQUIREMENT)       -->
+<!-- ====================================================================== -->
+### Hand-Audit Marks & Sign-Off (Belden Inc. - Partner's Desk Cross-Check)
+
+> **Claim 1 (FY2025 Total Revenue)**:  
+> **Value**: $2,715,194,000 ($2.72B), for the year ended December 31, 2025  
+> **Source**: Form 10-K, accession 0000913142-26-000009, Item 8 "Consolidated Statements of Operations" / Revenues  
+> **Mark**: **PASS** (Report matches filing)  
+> SEC filing: https://www.sec.gov/Archives/edgar/data/913142/000091314226000009/bdc-20251231.htm  
+>
+> **Claim 2 (Q3 2026 Results)**:  
+> **Value**: Revenue of $966 Million (up 38% year over year); Adjusted EPS of $2.26 (up 15% YoY) / GAAP EPS of ($0.29)  
+> **Source**: Form 8-K, Exhibit 99.1, accession 0000913142-26-000039, for the quarter ended September 27 / October 2026 (filed October 29, 2026)  
+> **Mark**: **PASS** (Report matches filing)  
+> SEC filing: https://www.sec.gov/Archives/edgar/data/913142/000091314226000039/0000913142-26-000039-index.htm  
+> SEC 10-Q with quarterly statement figures: https://www.sec.gov/Archives/edgar/data/913142/000091314226000042/bdc-20260927.htm  
+
+---
+
 # Five-Part Equity Research Report: BELDEN INC. (BDC)
 
 ## Part 1: Overview
