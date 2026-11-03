@@ -12,7 +12,7 @@ if not api_key or api_key == "paste-here":
       print("Error: API_KEY is missing or still a placeholder.", file=sys.stderr)
       sys.exit(1)
 
-if not sec_user_agent or "[your full name]" in sec_user_agent:
+if not sec_user_agent or "[your full name]" in sec_user_agent or "sample company" in sec_user_agent:
       print("Error: SEC_USER_AGENT is missing or still a placeholder.", file=sys.stderr)
       sys.exit(1)
 
