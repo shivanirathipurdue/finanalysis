@@ -64,16 +64,16 @@ Every peer margin is strictly defined as `Operating Income ÷ Total Revenue`.
 
 ---
 
-## 5. Partner's Pick Audit: Apple Inc. (AAPL)
+## 5. Partner's Pick Audit: Netflix Inc. (NFLX)
 
-Audited against 10-K (Accession: `0000320193-25-000079`), 10-Q (Accession: `0000320193-26-000020`), and 8-K (Accession: `0000320193-26-000024`, filed November 2, 2026).
+Audited against 10-K (Accession: `001065280-26-000034`), 10-Q (Accession: `0001065280-26-000291`), and 8-K (Accession: `0001065280-26-000290`, filed October 20, 2026).
 
 | Core Claim | Report Value | Source Filing & Line / Tag | Mark | Partner Verification Hand Check |
 | :--- | :---: | :--- | :-: | :--- |
-| **Total Revenue (FY25)** | $416,161,000,000 | 10-K / `RevenueFromContractWithCustomerExcludingAssessedTax` | **PASS** | Verified against 10-K consolidated statements of operations. |
-| **Operating Income (FY25)** | $133,050,000,000 | 10-K / `OperatingIncomeLoss` | **PASS** | Verified against 10-K operating income line. |
-| **Diluted EPS (FY25)** | $7.46 | 10-K / `EarningsPerShareDiluted` | **PASS** | Verified against 10-K diluted per-share line. |
-| **Q4 Quarterly Revenue** | $114.5 Billion | 8-K Ex 99.1, line 1 | **PASS** | *"The Company posted quarterly revenue of $114.5 billion, up 12 percent year over year."* |
-| **Q4 Quarterly Diluted EPS** | $2.10 | 8-K Ex 99.1, line 1 | **PASS** | *"Diluted earnings per share was $2.10, up 14 percent year over year."* |
-| **P/E (at $225.00)** | 30.16x | Code Calculator: `225.00 / 7.46` | **PASS** | Arithmetic confirmed by hand: `225.00 / 7.46 = 30.16x`. |
-| **Peer Operating Margins** | MSFT 46.78%, GOOGL 32.03% | XBRL Facts (Same Definition) | **PASS** | MSFT ($155.2B / $331.8B), GOOGL ($129.0B / $402.8B). |
+| **Total Revenue (FY25)** | $45,183,036,000 | 10-K Item 8 / `Revenues` | **PASS** | Verified against 10-K Consolidated Statements of Operations. |
+| **Operating Income (FY25)** | $13,326,603,000 | 10-K Item 8 / `OperatingIncomeLoss` | **PASS** | Verified against 10-K operating income line. |
+| **Operating Margin (FY25)** | 29.49% | Code Calculator: `13,326,603,000 / 45,183,036,000` | **PASS** | Operating Income divided by Total Revenues. |
+| **Q3 Quarterly Revenue** | +12% YoY | 8-K Ex 99.1, page 1 | **PASS** | *"Revenue in Q3 grew 12% year over year (+11% on a foreign exchange (F/X) neutral basis)..."* |
+| **Q3 Quarterly Diluted EPS** | $0.87 | 8-K Ex 99.1, page 1 | **PASS** | *"As a result, diluted EPS for the quarter amounted to $0.87 vs. $0.59 in Q3’25 (+49% year over year)."* |
+| **P/E (at $760.00)** | 300.40x | Code Calculator: `760.00 / 2.53` | **PASS** | Diluted EPS FY25 = $2.53. |
+| **Peer Operating Margins** | DIS 18.59%, CMCSA 16.71% | XBRL Facts (Same Definition) | **PASS** | DIS ($17.55B / $94.43B), CMCSA ($20.67B / $123.71B). |
