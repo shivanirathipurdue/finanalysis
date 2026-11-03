@@ -836,8 +836,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="FIN 67110 - Equity Research Desk (Data Side). Section 3.1 of Francis & Zhang (2026)."
     )
-    parser.add_argument("ticker", type=str, help="Company stock ticker symbol (e.g. COST)")
-    parser.add_argument("--peers", type=str, default="", help="Comma-separated list of peer tickers (e.g. WMT,TGT,BJ)")
+    parser.add_argument("ticker", type=str, help="Company stock ticker symbol")
+    parser.add_argument("--peers", type=str, default="", help="Comma-separated list of peer tickers")
     parser.add_argument("--price", type=float, default=None, help="Stock closing price for P/E computation")
     parser.add_argument("--step", type=int, choices=[1, 2, 3, 4, 5, 6, 7], default=None, help="Run one step only (1-7)")
 

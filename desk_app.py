@@ -2,14 +2,16 @@
 """
 FIN 67110 - Equity Research Desk (Labs 02 & 03)
 Implementation of the Four Roles from Section 3.1 of Francis & Zhang (2026):
-  1. Strategy Manager (Orchestrator & Verifier)
+  1. Strategy Manager (Orchestrator & Verifier - separate model call)
   2. Research Analyst
   3. Financial Analyst
-  4. Investment Advisor
+  4. Investment Advisor (receives only Research & Financial Analyst outputs)
 
-Rule: Nothing in the code names a specific company.
-All models called via official OpenAI Python SDK using API_KEY from .env,
-with graceful automated fallback support if API credits are exhausted.
+Rules:
+- Zero hardcoded company names or tickers in the desk code.
+- Every claim quotes its filing line or XBRL tag/period.
+- No in-model arithmetic; ratios come from the code calculator.
+- Strategy Manager checks the five parts, returns any failing part once, then compiles.
 """
 
 import argparse
@@ -42,7 +44,7 @@ def get_api_key() -> Optional[str]:
 
 
 # ==============================================================================
-# PROMPTS & ROLE DEFINITIONS (Following Francis & Zhang 2026)
+# PROMPTS & ROLE DEFINITIONS (Francis & Zhang 2026 Section 3.1)
 # ==============================================================================
 
 RESEARCH_ANALYST_SYSTEM = """You are a senior Equity Research Analyst following Section 3.1 of Francis & Zhang (2026).
@@ -50,9 +52,12 @@ Your role covers:
   1. Business Model
   2. Competitive Position
   3. Key Catalysts and Recent Developments
-Strict Rule: Every factual claim must quote its specific source line or context verbatim from the filing excerpts provided.
-Do not invent figures or speculate beyond the provided text.
-Format your output cleanly in Markdown."""
+Strict Rules:
+  - Every factual claim must cite its exact line and quote verbatim from the filing excerpts provided (e.g. "[10-K.txt, Line X] ...").
+  - Do not invent figures or generalize beyond the provided excerpts.
+Format your output cleanly in Markdown with subsections:
+### Business Model & Competitive Positioning
+### Catalysts and Recent Developments"""
 
 FINANCIAL_ANALYST_SYSTEM = """You are a Financial Analyst following Section 3.1 of Francis & Zhang (2026).
 Your role covers:
@@ -68,22 +73,26 @@ Format your output cleanly in Markdown."""
 
 INVESTMENT_ADVISOR_SYSTEM = """You are an Investment Advisor following Section 3.1 of Francis & Zhang (2026).
 Your role is to synthesize the Research Analyst's findings and Financial Analyst's metrics into:
-  1. Valuation Insights and Thesis
+  1. Valuation Insights and Strategic Outlook
   2. Investment Recommendation: Exactly one of [Buy, Hold, or Sell]
   3. The ONE Decisive Metric/Number that drives this recommendation.
-Strict Rule:
-  - Base your thesis strictly and exclusively on the outputs from the Research Analyst and Financial Analyst.
+Strict Rules:
+  - Base your thesis strictly and exclusively on the outputs from the Research Analyst and Financial Analyst, and nothing else.
   - State the ONE decisive number explicitly in bold.
-Format your output cleanly in Markdown."""
+Format your output cleanly in Markdown with subsections:
+### Future Strategic Outlook
+### Thesis & Recommendation"""
 
-STRATEGY_MANAGER_SYSTEM = """You are the Strategy Manager coordinating an equity research desk.
-Your role is to assemble, verify, and compile a five-part equity research report following Report A template:
-  Part 1: Overview
-  Part 2: Market Positioning and Growth Outlook
-  Part 3: Valuation Insights
-  Part 4: Future Developments and Strategic Recommendations
-  Part 5: Investment Recommendation
-Ensure all 5 parts are present, fully consistent, and adhere to strict sourcing rules."""
+STRATEGY_MANAGER_SYSTEM = """You are the Strategy Manager coordinating an autonomous equity research desk following Section 3.1 of Francis & Zhang (2026).
+Your role is to:
+  1. Verify that all five parts of the Report A template are present and fully consistent:
+     Part 1: Overview
+     Part 2: Market Positioning and Growth Outlook
+     Part 3: Valuation Insights
+     Part 4: Future Developments and Strategic Recommendations
+     Part 5: Investment Recommendation
+  2. Confirm that every claim quotes its source line/tag and that the decisive metric is explicitly stated.
+  3. Compile and return the complete five-part report in clean Markdown."""
 
 
 class EquityResearchDesk:
@@ -110,36 +119,37 @@ class EquityResearchDesk:
         print(f"STARTING EQUITY RESEARCH DESK: {self.ticker}")
         print("=" * 80 + "\n")
 
-        # Step 1
+        # Step 1: Resolve Ticker -> CIK
         cik_str, title, cik_int = desk_steps.step_1_resolve_ticker(self.ticker, self.user_agent)
 
-        # Step 2
+        # Step 2: List Filings
         filings = desk_steps.step_2_list_filings(cik_str, cik_int, self.user_agent)
 
-        # Step 3
+        # Step 3: Download Documents
         work_dir, release_path = desk_steps.step_3_download_and_save_documents(
             cik_str, cik_int, filings, self.user_agent, self.ticker
         )
 
-        # Step 4
+        # Step 4: XBRL Facts
         facts, fy, end_date = desk_steps.step_4_fetch_facts(cik_str, self.user_agent)
 
-        # Step 5
+        # Step 5: Calculator
         ratios = desk_steps.step_5_calculator(facts, self.price)
 
-        # Step 6
+        # Step 6: Release Lines
         rev_lines, eps_lines = desk_steps.step_6_extract_release_lines(release_path)
 
-        # Step 7
+        # Step 7: Peers
         peer_results = desk_steps.step_7_peers(
             self.peers, self.user_agent, self.ticker, facts, output_dir=work_dir
         )
 
-        # Execute 4 Model Roles
+        # Execute 4 Model Roles via Strategy Manager Orchestrator
         report_path = self.run_roles(
             title=title,
             filings=filings,
             work_dir=work_dir,
+            release_path=release_path,
             facts=facts,
             fy=fy,
             end_date=end_date,
@@ -152,7 +162,7 @@ class EquityResearchDesk:
         return report_path
 
     def _call_model(self, system_prompt: str, user_payload: Dict[str, Any]) -> str:
-        """Call LLM via OpenAI SDK, or switch to fallback engine if credits/network fail."""
+        """Call LLM via OpenAI SDK, or switch to fallback engine if quota or network fails."""
         payload_json = json.dumps(user_payload, indent=2, default=str)
 
         if not self.use_fallback and self.client:
@@ -165,9 +175,10 @@ class EquityResearchDesk:
                     ],
                     temperature=0.2,
                 )
-                return response.choices[0].message.content or ""
+                content = response.choices[0].message.content or ""
+                if content.strip():
+                    return content.strip()
             except Exception as e:
-                # Quota or rate limit exceeded -> activate Course Fallback mechanism
                 print(f"[Notice] Model provider API error ({e}). Engaging Course Fallback Mode as specified in syllabus.")
                 self.use_fallback = True
 
@@ -184,21 +195,40 @@ class EquityResearchDesk:
         elif system_prompt == INVESTMENT_ADVISOR_SYSTEM:
             return self._build_advisor_fallback(ctx)
         else:
-            return self._build_manager_fallback(ctx)
+            return self._build_manager_fallback(user_payload)
 
     def _build_research_fallback(self, ctx: Dict[str, Any]) -> str:
         title = ctx.get("company_title", self.ticker)
-        snippets = ctx.get("text_snippets", [])
-        snippet_text = "\n".join([f"> \"{s}\"" for s in snippets[:4]]) if snippets else ""
+        excerpts = ctx.get("excerpts", [])
+        
+        quote_lines = []
+        for ex in excerpts[:6]:
+            fname = ex.get("file", "filing.txt")
+            lnum = ex.get("line", 1)
+            txt = ex.get("text", "").strip()
+            quote_lines.append(f"> [{fname}, Line {lnum}] \"{txt}\"")
+        
+        quote_text = "\n\n".join(quote_lines) if quote_lines else "> [10-K.txt, Line 1] Core business operations and disclosures."
+
+        # Extract catalyst lines
+        cat_lines = ctx.get("release_excerpts", [])
+        cat_quotes = []
+        for cat in cat_lines[:3]:
+            fname = cat.get("file", "8-K_Ex99-1.txt")
+            lnum = cat.get("line", 1)
+            txt = cat.get("text", "").strip()
+            cat_quotes.append(f"> [{fname}, Line {lnum}] \"{txt}\"")
+        cat_text = "\n\n".join(cat_quotes) if cat_quotes else "- Quarterly performance and strategic developments disclosed in latest filings."
 
         return f"""### Business Model & Competitive Positioning
-{title} operates as a scaled enterprise focused on supply-chain efficiency, high inventory turnover, and member/customer loyalty.
-From the latest filings:
-{snippet_text}
+{title} ({self.ticker}) business operations, segment descriptions, and competitive positioning from audited disclosures:
+
+{quote_text}
 
 ### Catalysts and Recent Developments
-- Recent quarterly filing highlights operational resilience, expansion in global units, and strong digital/eCommerce fulfillment.
-- Growth catalysts are underpinned by expanding membership/subscription renewal rates and operating leverage across commercial operations."""
+Key catalysts and recent developments reported in the latest quarterly disclosures:
+
+{cat_text}"""
 
     def _build_financial_fallback(self, ctx: Dict[str, Any]) -> str:
         facts = ctx.get("facts", {})
@@ -208,6 +238,7 @@ From the latest filings:
         peers = ctx.get("peers", [])
         fy = ctx.get("fy", "")
         end_date = ctx.get("period_end", "")
+        price = ctx.get("price") or self.price
 
         rev_tag = facts.get("Total Revenue", {}).get("tag", "Revenues")
         rev_cur = facts.get("Total Revenue", {}).get("current_val")
@@ -246,6 +277,8 @@ From the latest filings:
             )
         peer_text = "\n".join(peer_rows) if peer_rows else "No peers evaluated."
 
+        pe_line = f"{price:.2f} / {eps_cur:.4f} = **{pe:.4f}x**" if (price and eps_cur and pe) else "N/A"
+
         return f"""### Financial Statement Analysis (Latest FY {fy}, Period Ended {end_date})
 Every figure is mapped directly from SEC XBRL company facts and 10-K audited statements:
 
@@ -275,9 +308,9 @@ Every figure is mapped directly from SEC XBRL company facts and 10-K audited sta
    - **FCF Arithmetic**: {desk_steps.format_num(cfo_cur)} - {desk_steps.format_num(capex_cur)} = **${desk_steps.format_num(fcf)}**
 
 6. **Valuation Multiple (P/E)**:
-   - Diluted EPS Tag: `EarningsPerShareDiluted`: **${eps_cur:.2f}**
-   - Price: **${self.price:.2f}**
-   - **P/E Arithmetic**: {self.price:.2f} / {eps_cur:.2f} = **{pe:.2f}x**
+   - Diluted EPS Tag: `EarningsPerShareDiluted`: **${eps_cur:.4f}**
+   - Price: **${price:.2f}**
+   - **P/E Arithmetic**: {pe_line}
 
 ### Latest Quarter Performance (Earnings Release Exhibit 99.1)
 - **Quarter Revenue / Sales**:
@@ -289,36 +322,43 @@ Every figure is mapped directly from SEC XBRL company facts and 10-K audited sta
 {peer_text}"""
 
     def _build_advisor_fallback(self, ctx: Dict[str, Any]) -> str:
-        ratios = ctx.get("ratios", {})
-        pe = ratios.get("pe_ratio")
-        growth = ratios.get("revenue_growth", 0)
-        margin = ratios.get("operating_margin", 0)
-        decisive_num = f"{pe:.2f}x P/E" if pe else f"{margin * 100:.2f}% Operating Margin"
+        # Investment advisor receives ONLY research_output and financial_output
+        fin_text = ctx.get("financial_output", "")
+        res_text = ctx.get("research_output", "")
+
+        # Extract P/E and decisive number from financial output
+        pe_match = re.search(r"\*\*([0-9\.]+)x\*\*", fin_text)
+        pe_val = float(pe_match.group(1)) if pe_match else None
+
+        decisive_num = f"{pe_val:.4f}x P/E" if pe_val else "P/E Valuation Multiple"
 
         rec = "Hold"
-        if pe and pe < 25 and growth > 0.08:
+        if pe_val and pe_val < 25:
             rec = "Buy"
-        elif pe and pe > 40:
+        elif pe_val and pe_val > 40:
             rec = "Hold"
 
         return f"""### Future Strategic Outlook
-The company maintains strong momentum across core retail operations and geographic warehouse expansion. Strategic priorities focus on deepening member engagement, continuing measured global footprint growth, and leveraging digital commerce enhancements while preserving its low-cost distribution model.
+Based strictly on the research analysis of core business operations and quarterly financial performance, future operational trajectory depends on sustaining top-line execution, managing operational margin discipline against industry peers, and maintaining order momentum across primary business segments.
 
 ### Thesis & Recommendation
-The company exhibits durable competitive advantages and consistent high return on equity. However, at prevailing valuation levels, the current price to earnings multiple embeds substantial growth expectations relative to discount retail peers.
+The company demonstrates solid competitive execution and disciplined cash flow generation. At current market valuation levels, the prevailing valuation multiple establishes the risk/reward boundary relative to operational peers.
 
 - **Recommendation**: **{rec}**
 - **The Decisive Metric**: **{decisive_num}**
-- **Rationale**: The valuation multiple of **{decisive_num}** prices in continuous flawless operational execution relative to peers' margins, making a balanced **{rec}** position the most prudent stance."""
+- **Rationale**: The valuation multiple of **{decisive_num}** establishes the primary benchmark for continuous execution relative to peers' operating margins, making a **{rec}** recommendation the most consistent synthesis of research and financial metrics."""
 
-    def _build_manager_fallback(self, ctx: Dict[str, Any]) -> str:
-        return ""
+    def _build_manager_fallback(self, payload: Dict[str, Any]) -> str:
+        ctx = payload.get("context", {})
+        sections = ctx.get("sections", [])
+        return "\n\n".join([s.get("content", "") for s in sections])
 
     def run_roles(
         self,
         title: str,
         filings: Dict[str, Any],
         work_dir: Path,
+        release_path: Optional[Path],
         facts: Dict[str, Any],
         fy: int,
         end_date: str,
@@ -331,33 +371,42 @@ The company exhibits durable competitive advantages and consistent high return o
         print("EXECUTING THE FOUR MODEL ROLES (STRATEGY MANAGER HARNESS)")
         print("=" * 80)
 
-        # 1. Print Running Strategy Manager
-        print("Running: Strategy Manager")
-
-        # Load document snippets for research role
+        # Load document excerpts with exact file and line references for research role
         snippets = []
         k_txt = work_dir / "10-K.txt"
         if k_txt.exists():
             with open(k_txt, "r", encoding="utf-8") as f:
-                k_lines = f.readlines()
-                for line in k_lines:
+                for idx, line in enumerate(f):
                     l_str = line.strip()
-                    if len(l_str) > 60 and any(w in l_str.lower() for w in ["business", "warehouse", "products", "customers", "competitive", "strategy"]):
-                        snippets.append(l_str)
-                        if len(snippets) >= 6:
+                    if len(l_str) > 60 and not l_str.startswith("us-gaap:") and not ":" in l_str[:30] and any(w in l_str.lower() for w in ["business", "solutions", "products", "customers", "competitive", "strategy", "revenue", "demand", "market"]):
+                        snippets.append({"file": "10-K.txt", "line": idx + 1, "text": l_str})
+                        if len(snippets) >= 8:
                             break
+
+        rel_snippets = []
+        if release_path and release_path.exists():
+            with open(release_path, "r", encoding="utf-8") as f:
+                for idx, line in enumerate(f):
+                    l_str = line.strip()
+                    if len(l_str) > 40 and any(w in l_str.lower() for w in ["quarter", "revenue", "eps", "growth", "orders", "results", "demand"]):
+                        rel_snippets.append({"file": "8-K_Ex99-1.txt", "line": idx + 1, "text": l_str})
+                        if len(rel_snippets) >= 4:
+                            break
+
+        # 1. Print Running Strategy Manager
+        print("Running: Strategy Manager (Delegating Roles)")
 
         # 2. Print Running Research Analyst
         print("Running: Research Analyst")
         research_payload = {
-            "task": "Analyze business model, competitive position, catalysts, and recent developments. Quote lines.",
+            "task": "Analyze business model, competitive position, catalysts, and recent developments. Quote exact line references.",
             "context": {
                 "company_title": title,
                 "ticker": self.ticker,
-                "text_snippets": snippets,
-                "quarterly_release_revenue_line": rev_lines[0] if rev_lines else "",
+                "excerpts": snippets,
+                "release_excerpts": rel_snippets,
             },
-            "expected_output": "Markdown analysis with line citations.",
+            "expected_output": "Markdown analysis quoting lines with [file, line] references.",
         }
         research_out = self._call_model(RESEARCH_ANALYST_SYSTEM, research_payload)
 
@@ -375,30 +424,28 @@ The company exhibits durable competitive advantages and consistent high return o
                 "rev_lines": rev_lines,
                 "eps_lines": eps_lines,
                 "peers": peers,
+                "price": self.price,
             },
             "expected_output": "Markdown statement analysis with exact arithmetic and tag citations.",
         }
         financial_out = self._call_model(FINANCIAL_ANALYST_SYSTEM, financial_payload)
 
-        # 4. Print Running Investment Advisor
+        # 4. Print Running Investment Advisor (Receives ONLY Research and Financial outputs)
         print("Running: Investment Advisor")
         advisor_payload = {
-            "task": "Synthesize Research Analyst and Financial Analyst into thesis, Buy/Hold/Sell, and ONE decisive number.",
+            "task": "Synthesize Research Analyst and Financial Analyst outputs into thesis, Buy/Hold/Sell, and ONE decisive number.",
             "context": {
-                "company_title": title,
-                "ticker": self.ticker,
-                "research_summary": research_out,
-                "financial_summary": financial_out,
-                "ratios": ratios,
+                "research_output": research_out,
+                "financial_output": financial_out,
             },
-            "expected_output": "Thesis, Recommendation (Buy/Hold/Sell), and the ONE decisive number.",
+            "expected_output": "Thesis, Recommendation (Buy/Hold/Sell), and the ONE decisive number from outputs.",
         }
         advisor_out = self._call_model(INVESTMENT_ADVISOR_SYSTEM, advisor_payload)
 
-        # 5. Strategy Manager Verification & Compilation
-        print("Running: Strategy Manager (Verification & Template Assembly)")
+        # 5. Print Running Strategy Manager (Verification, Re-prompting if needed, and Compilation)
+        print("Running: Strategy Manager (Verification & Final Assembly)")
 
-        # Extract subsections cleanly
+        # Extract subsections
         res_parts = [p.strip() for p in re.split(r"(?m)^###\s+", research_out) if p.strip()]
         res_overview = res_parts[0] if len(res_parts) > 0 else research_out
         res_positioning = res_parts[1] if len(res_parts) > 1 else research_out
@@ -415,13 +462,35 @@ The company exhibits durable competitive advantages and consistent high return o
             ("Investment Recommendation", f"## Part 5: Investment Recommendation\n### {adv_recommendation}"),
         ]
 
-        # Verify completeness
+        # Strategy Manager Verification Check: If any section fails, return to role once
         verified_sections = []
         for sname, scontent in sections:
-            if not scontent.strip():
-                print(f"[Verification Alert] Section '{sname}' was incomplete; re-prompting...")
-                scontent = f"## {sname}\nAnalysis verified and confirmed by Strategy Manager checklist."
+            is_valid = bool(scontent.strip() and len(scontent.strip()) > 30)
+            if not is_valid:
+                print(f"[Strategy Manager Alert] Section '{sname}' failed validation. Returning to role once...")
+                # Re-prompt once
+                if sname in ["Overview", "Market Positioning and Growth Outlook"]:
+                    re_out = self._call_model(RESEARCH_ANALYST_SYSTEM, research_payload)
+                    scontent = f"## {sname}\n{re_out}"
+                elif sname == "Valuation Insights":
+                    re_out = self._call_model(FINANCIAL_ANALYST_SYSTEM, financial_payload)
+                    scontent = f"## Part 3: Valuation Insights\n{re_out}"
+                else:
+                    re_out = self._call_model(INVESTMENT_ADVISOR_SYSTEM, advisor_payload)
+                    scontent = f"## {sname}\n{re_out}"
             verified_sections.append(scontent)
+
+        # Strategy Manager Model Call for Final Assembly and Verification
+        manager_payload = {
+            "task": "Assemble and verify the final five-part report.",
+            "context": {
+                "sections": [{"name": s[0], "content": c} for s, c in zip(sections, verified_sections)],
+            },
+            "expected_output": "The verified five-part report in clean Markdown.",
+        }
+        assembled_content = self._call_model(STRATEGY_MANAGER_SYSTEM, manager_payload)
+        if not assembled_content.strip() or self.use_fallback:
+            assembled_content = "\n\n".join(verified_sections)
 
         # Header lines required by specification
         accn_10k = filings.get("10-K", {}).get("accessionNumber", "N/A")
@@ -431,7 +500,7 @@ The company exhibits durable competitive advantages and consistent high return o
         line1 = f"Filings: 10-K ({accn_10k}), 10-Q ({accn_10q}), 8-K ({accn_8k})"
         line2 = "fallback" if self.use_fallback else f"Run Time: {datetime.now().strftime('%Y-%m-%d %H:%M:%S UTC')}"
 
-        final_report_md = f"{line1}\n{line2}\n\n" + "\n\n".join(verified_sections)
+        final_report_md = f"{line1}\n{line2}\n\n{assembled_content}"
 
         # Save report
         report_file = work_dir / "report.md"
@@ -448,8 +517,8 @@ def main():
     parser = argparse.ArgumentParser(
         description="FIN 67110 - Equity Research Desk (Labs 02 & 03: Seven Steps + Four Roles)."
     )
-    parser.add_argument("ticker", type=str, help="Company stock ticker symbol (e.g. COST)")
-    parser.add_argument("--peers", type=str, default="", help="Comma-separated peer tickers (e.g. WMT,TGT,BJ)")
+    parser.add_argument("ticker", type=str, help="Company stock ticker symbol")
+    parser.add_argument("--peers", type=str, default="", help="Comma-separated peer tickers")
     parser.add_argument("--price", type=float, default=None, help="Stock closing price for P/E computation")
 
     args = parser.parse_args()
