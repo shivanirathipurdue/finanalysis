@@ -1,0 +1,411 @@
+{
+  "target": {
+    "ticker": "COST",
+    "fy": 2026,
+    "period_end": "2026-08-30",
+    "facts": {
+      "Total Revenue": {
+        "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+        "current_val": 303154000000,
+        "prior_val": 275235000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Operating Income": {
+        "tag": "OperatingIncomeLoss",
+        "current_val": 11685000000,
+        "prior_val": 10383000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Net Income": {
+        "tag": "NetIncomeLoss",
+        "current_val": 9226000000,
+        "prior_val": 8099000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Diluted EPS": {
+        "tag": "EarningsPerShareDiluted",
+        "current_val": 20.76,
+        "prior_val": 18.21,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD/shares",
+        "fy": 2026
+      },
+      "Stockholders' Equity": {
+        "tag": "StockholdersEquity",
+        "current_val": 35803000000,
+        "prior_val": 29164000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Long-Term Debt": {
+        "tag": "LongTermDebtNoncurrent",
+        "current_val": 3914000000,
+        "prior_val": 5713000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Current Portion LT Debt": {
+        "tag": "LongTermDebtCurrent",
+        "current_val": 2248000000,
+        "prior_val": 75000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Cash from Operations": {
+        "tag": "NetCashProvidedByUsedInOperatingActivities",
+        "current_val": 15817000000,
+        "prior_val": 13335000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      },
+      "Additions to PPE": {
+        "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "current_val": 6435000000,
+        "prior_val": 5498000000,
+        "period_end": "2026-08-30",
+        "form": "10-K",
+        "accn": "0000909832-26-000093",
+        "unit": "USD",
+        "fy": 2026
+      }
+    },
+    "operating_margin": 0.03854476602650798
+  },
+  "peers": {
+    "WMT": {
+      "ticker": "WMT",
+      "title": "Walmart Inc.",
+      "cik": "0000104169",
+      "fy": 2026,
+      "period_end": "2026-01-31",
+      "revenue_tag": "Revenues",
+      "total_revenue": 713163000000,
+      "operating_income": 29825000000,
+      "operating_margin": 0.041820733829433104,
+      "facts": {
+        "Total Revenue": {
+          "tag": "Revenues",
+          "current_val": 713163000000,
+          "prior_val": 680985000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Operating Income": {
+          "tag": "OperatingIncomeLoss",
+          "current_val": 29825000000,
+          "prior_val": 29348000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Net Income": {
+          "tag": "NetIncomeLoss",
+          "current_val": 21893000000,
+          "prior_val": 19436000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Diluted EPS": {
+          "tag": "EarningsPerShareDiluted",
+          "current_val": 2.73,
+          "prior_val": 2.41,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD/shares",
+          "fy": 2026
+        },
+        "Stockholders' Equity": {
+          "tag": "StockholdersEquity",
+          "current_val": 99617000000,
+          "prior_val": 91013000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Long-Term Debt": {
+          "tag": "LongTermDebtNoncurrent",
+          "current_val": 34624000000,
+          "prior_val": 33401000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Current Portion LT Debt": {
+          "tag": "LongTermDebtCurrent",
+          "current_val": 3542000000,
+          "prior_val": 2598000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Cash from Operations": {
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "current_val": 41565000000,
+          "prior_val": 36443000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        },
+        "Additions to PPE": {
+          "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+          "current_val": 26642000000,
+          "prior_val": 23783000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000104169-26-000055",
+          "unit": "USD",
+          "fy": 2026
+        }
+      }
+    },
+    "TGT": {
+      "ticker": "TGT",
+      "title": "TARGET CORP",
+      "cik": "0000027419",
+      "fy": 2025,
+      "period_end": "2026-01-31",
+      "revenue_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "total_revenue": 104780000000,
+      "operating_income": 5117000000,
+      "operating_margin": 0.048835655659477,
+      "facts": {
+        "Total Revenue": {
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "current_val": 104780000000,
+          "prior_val": 106566000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Operating Income": {
+          "tag": "OperatingIncomeLoss",
+          "current_val": 5117000000,
+          "prior_val": 5566000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Net Income": {
+          "tag": "NetIncomeLoss",
+          "current_val": 3705000000,
+          "prior_val": 4091000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Diluted EPS": {
+          "tag": "EarningsPerShareDiluted",
+          "current_val": 8.13,
+          "prior_val": 8.86,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD/shares",
+          "fy": 2025
+        },
+        "Stockholders' Equity": {
+          "tag": "StockholdersEquity",
+          "current_val": 16165000000,
+          "prior_val": 14666000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Long-Term Debt": {
+          "tag": "LongTermDebt",
+          "current_val": 14398000000,
+          "prior_val": 13904000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Current Portion LT Debt": {
+          "tag": "LongTermDebtAndCapitalLeaseObligationsCurrent",
+          "current_val": 2130000000,
+          "prior_val": 1636000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Cash from Operations": {
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "current_val": 6562000000,
+          "prior_val": 7367000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Additions to PPE": {
+          "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+          "current_val": 3727000000,
+          "prior_val": 2891000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0000027419-26-000016",
+          "unit": "USD",
+          "fy": 2025
+        }
+      }
+    },
+    "BJ": {
+      "ticker": "BJ",
+      "title": "BJ's Wholesale Club Holdings, Inc.",
+      "cik": "0001531152",
+      "fy": 2025,
+      "period_end": "2026-01-31",
+      "revenue_tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+      "total_revenue": 21457274000,
+      "operating_income": 816604000,
+      "operating_margin": 0.03805721080879146,
+      "facts": {
+        "Total Revenue": {
+          "tag": "RevenueFromContractWithCustomerExcludingAssessedTax",
+          "current_val": 21457274000,
+          "prior_val": 20501804000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Operating Income": {
+          "tag": "OperatingIncomeLoss",
+          "current_val": 816604000,
+          "prior_val": 772206000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Net Income": {
+          "tag": "NetIncomeLoss",
+          "current_val": 578377000,
+          "prior_val": 534417000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Diluted EPS": {
+          "tag": "EarningsPerShareDiluted",
+          "current_val": 4.38,
+          "prior_val": 4,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD/shares",
+          "fy": 2025
+        },
+        "Stockholders' Equity": {
+          "tag": "StockholdersEquity",
+          "current_val": 2197659000,
+          "prior_val": 1847454000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Long-Term Debt": {
+          "tag": "LongTermDebtNoncurrent",
+          "current_val": 399099000,
+          "prior_val": 398807000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Current Portion LT Debt": {
+          "tag": "LongTermDebtCurrent",
+          "current_val": 120000000,
+          "prior_val": 175000000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Cash from Operations": {
+          "tag": "NetCashProvidedByUsedInOperatingActivities",
+          "current_val": 1030056000,
+          "prior_val": 900872000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        },
+        "Additions to PPE": {
+          "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+          "current_val": 702048000,
+          "prior_val": 587983000,
+          "period_end": "2026-01-31",
+          "form": "10-K",
+          "accn": "0001531152-26-000007",
+          "unit": "USD",
+          "fy": 2025
+        }
+      }
+    }
+  }
+}

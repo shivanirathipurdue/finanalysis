@@ -2,7 +2,9 @@
 # Environment Variables & Secrets (Keep Safe)
 # ==========================================
 .env
+**/.env
 .env.*
+**/.env.*
 !.env.example
 *.env
 *.key
@@ -27,7 +29,9 @@ dist/
 # Virtual Environments
 # ==========================================
 .venv/
+**/.venv/
 venv/
+**/venv/
 ENV/
 env/
 env.bak/

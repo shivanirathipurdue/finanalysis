@@ -1,0 +1,49 @@
+research_task:
+  description: >
+    Conduct qualitative equity research on {company_name} ({ticker}) in the {sector} sector.
+    Analyze:
+    1. Core business model and primary revenue drivers.
+    2. Competitive moat and positioning relative to peers: {peers}.
+    3. Key recent catalysts and operational developments.
+  expected_output: >
+    A structured qualitative briefing in Markdown with subsections:
+    ### Business Model & Competitive Positioning
+    ### Catalysts and Recent Developments
+  agent: research_analyst
+
+financial_task:
+  description: >
+    Perform a financial analysis for {company_name} ({ticker}).
+    Evaluate:
+    1. Financial performance trends: Revenue Growth, Operating Margin, Return on Equity, Debt-to-Equity, and Free Cash Flow.
+    2. Capital structure and liquidity position.
+    3. Operating margin comparisons against peers: {peers}.
+  expected_output: >
+    A financial analysis briefing in Markdown detailing key financial ratios, balance sheet health, and peer margin comparisons.
+  agent: financial_analyst
+
+investment_advice_task:
+  description: >
+    Review the research findings and financial analysis for {company_name} ({ticker}).
+    Synthesize the analysis into:
+    1. Strategic valuation perspective and future outlook.
+    2. Decisive Investment Recommendation: exactly one of [Buy, Hold, or Sell].
+    3. The ONE decisive metric/number that drives this recommendation (highlighted in bold).
+  expected_output: >
+    A concise investment thesis in Markdown with subsections:
+    ### Future Strategic Outlook
+    ### Thesis & Recommendation (including the ONE decisive number in bold)
+  agent: investment_advisor
+
+compile_report_task:
+  description: >
+    Review, verify, and compile the final institutional Five-Part Equity Research Report for {company_name} ({ticker}) following Section 3.1 of Francis & Zhang (2026).
+    Integrate:
+    - Part 1: Company Overview
+    - Part 2: Market Positioning and Growth Outlook
+    - Part 3: Valuation Insights and Financial Statement Analysis
+    - Part 4: Future Developments and Strategic Risks
+    - Part 5: Final Investment Recommendation (Buy/Hold/Sell) and Decisive Metric
+  expected_output: >
+    The complete Five-Part Equity Research Report formatted in clean Markdown without code fences.
+  agent: strategy_manager

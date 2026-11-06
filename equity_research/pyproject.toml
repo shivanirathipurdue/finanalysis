@@ -1,0 +1,25 @@
+[project]
+name = "equity_research"
+version = "0.1.0"
+description = "equity_research using crewAI"
+authors = [{ name = "Your Name", email = "you@example.com" }]
+requires-python = ">=3.10,<3.14"
+dependencies = [
+    "crewai[tools]>=1.15.34,<2.0.0"
+]
+
+[project.scripts]
+equity_research = "equity_research.main:run"
+run_crew = "equity_research.main:run"
+train = "equity_research.main:train"
+replay = "equity_research.main:replay"
+test = "equity_research.main:test"
+run_with_trigger = "equity_research.main:run_with_trigger"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.crewai]
+type = "crew"
+project_id = "d16ebb6d-856f-421f-9899-75ac0594558d"
