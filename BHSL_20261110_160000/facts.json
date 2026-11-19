@@ -1,0 +1,118 @@
+{
+  "target": {
+    "ticker": "BHSL",
+    "name": "BioHealth Solutions Inc.",
+    "parent_name": "HealthCare Global Corp.",
+    "parent_ticker": "HCG",
+    "distribution_date": "2026-09-01",
+    "distribution_ratio": "1 share per 10 parent shares",
+    "record_date": "2026-08-15",
+    "form_10_accn": "0001928374-26-000005",
+    "price_on_price_date": 14.20,
+    "price_date": "2026-09-02",
+    "shares_outstanding": 50000000,
+    "market_value": 710000000.0,
+    "index_membership": "None (excluded from S&P 500 and Russell 1000)",
+    "window_ends": "2027-02-28",
+    "seeker_rank": 1,
+    "seeker_points": 86.9,
+    "facts": {
+      "Net Income": {
+        "statement_type": "pro forma",
+        "tag": "NetIncomeLoss",
+        "period_end": "2025-12-31",
+        "fy": 2025,
+        "amount": 140000000.0,
+        "form": "Form 10",
+        "section": "Unaudited Pro Forma Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Depreciation and Amortization": {
+        "statement_type": "pro forma",
+        "tag": "DepreciationAndAmortization",
+        "period_end": "2025-12-31",
+        "fy": 2025,
+        "amount": 35000000.0,
+        "form": "Form 10",
+        "section": "Unaudited Pro Forma Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Capital Expenditures": {
+        "statement_type": "pro forma",
+        "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "period_end": "2025-12-31",
+        "fy": 2025,
+        "amount": 25000000.0,
+        "form": "Form 10",
+        "section": "Unaudited Pro Forma Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Historical Net Income": {
+        "statement_type": "historical",
+        "tag": "NetIncomeLoss",
+        "period_end": "2024-12-31",
+        "fy": 2024,
+        "amount": 125000000.0,
+        "form": "Form 10",
+        "section": "Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Historical D&A": {
+        "statement_type": "historical",
+        "tag": "DepreciationAndAmortization",
+        "period_end": "2024-12-31",
+        "fy": 2024,
+        "amount": 30000000.0,
+        "form": "Form 10",
+        "section": "Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Historical CapEx": {
+        "statement_type": "historical",
+        "tag": "PaymentsToAcquirePropertyPlantAndEquipment",
+        "period_end": "2024-12-31",
+        "fy": 2024,
+        "amount": 20000000.0,
+        "form": "Form 10",
+        "section": "Combined Financial Statements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Debt Raised": {
+        "statement_type": "pro forma",
+        "tag": "ProceedsFromIssuanceOfLongTermDebt",
+        "period_end": "2026-08-31",
+        "amount": 120000000.0,
+        "form": "Form 10",
+        "section": "Financing Arrangements and Separation Agreements",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Cash Distributed to Parent": {
+        "statement_type": "pro forma",
+        "tag": "PaymentsOfDividends",
+        "period_end": "2026-08-31",
+        "amount": 115000000.0,
+        "form": "Form 10",
+        "section": "Separation and Distribution Agreement",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Credit Facility Capacity": {
+        "statement_type": "pro forma",
+        "tag": "LineOfCreditFacilityMaximumBorrowingCapacity",
+        "period_end": "2026-08-31",
+        "amount": 50000000.0,
+        "form": "Form 10",
+        "section": "Description of Material Indebtedness",
+        "filing_accn": "0001928374-26-000005"
+      },
+      "Form 4 Open-Market Purchases": {
+        "statement_type": "reported after the spin",
+        "tag": "InsiderOpenMarketPurchasesCodeP",
+        "period_end": "2026-09-08",
+        "amount": 4970000.0,
+        "form": "Form 4",
+        "section": "Table I - Non-Derivative Securities Acquired, Disposed of, or Beneficially Owned",
+        "filing_accn": "0001928374-26-000014"
+      }
+    }
+  }
+}

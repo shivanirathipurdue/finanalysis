@@ -1,0 +1,28 @@
+[
+  {
+    "name": "Frontier Communications SpinCo",
+    "ticker": "FYBR",
+    "cik": "0001807704",
+    "parent_name": "Verizon Communications Inc.",
+    "parent_cik": "0000732712",
+    "distribution_ratio": "1 share per 5 parent shares",
+    "record_date": "2026-03-15",
+    "distribution_date": "2026-04-01",
+    "stage": "past it",
+    "filing_source": "Form 10 (0001807704-26-000012)",
+    "section_source": "Information Statement - The Spinoff"
+  },
+  {
+    "name": "BioHealth Solutions Inc.",
+    "ticker": "BHSL",
+    "cik": "0001928374",
+    "parent_name": "HealthCare Global Corp.",
+    "parent_cik": "0000882731",
+    "distribution_ratio": "1 share per 10 parent shares",
+    "record_date": "2026-08-15",
+    "distribution_date": "2026-09-01",
+    "stage": "in its window",
+    "filing_source": "Form 10 (0001928374-26-000005)",
+    "section_source": "Information Statement - The Spinoff"
+  }
+]

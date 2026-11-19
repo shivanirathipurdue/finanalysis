@@ -1,0 +1,22 @@
+UNITED STATES SECURITIES AND EXCHANGE COMMISSION
+Washington, D.C. 20549
+STATEMENT OF CHANGES IN BENEFICIAL OWNERSHIP OF SECURITIES (FORM 4)
+Issuer: BioHealth Solutions Inc. [BHSL]
+Filing Accession: 0001928374-26-000014
+Date of Earliest Transaction: September 5, 2026
+
+Table I - Non-Derivative Securities Acquired, Disposed of, or Beneficially Owned
+1. Title of Security: Common Stock ($0.01 par value)
+2. Transaction Date: 2026-09-05
+3. Transaction Code: P (Open-market purchase)
+4. Amount of Securities Acquired: 200,000 shares at $14.15 per share (Total: $2,830,000)
+5. Reporting Owner: Chief Executive Officer
+
+1. Title of Security: Common Stock ($0.01 par value)
+2. Transaction Date: 2026-09-08
+3. Transaction Code: P (Open-market purchase)
+4. Amount of Securities Acquired: 150,000 shares at $14.2667 per share (Total: $2,140,000)
+5. Reporting Owner: Chief Financial Officer
+
+Total Insider Open-Market Purchases (Code P): 350,000 shares amounting to open-market purchases of $4,970,000.
+Transaction Code P indicates open-market or private purchase, confirming direct insider alignment with shareholders.

@@ -1,0 +1,13 @@
+{
+  "client_purchase_size": 500000.0,
+  "shares_outstanding": 50000000,
+  "valuation_method": "Owner Cash Flow Multiple",
+  "rates": {
+    "low_case_multiple": 6.0,
+    "mid_case_multiple": 8.0,
+    "discount_rate_low": 0.12,
+    "discount_rate_mid": 0.10
+  },
+  "conviction_rule": "High if price is more than 25% below low-case value per share; otherwise Low",
+  "conviction_discount_threshold": 0.25
+}

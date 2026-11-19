@@ -1,0 +1,38 @@
+SECURITIES AND EXCHANGE COMMISSION
+Washington, D.C. 20549
+FORM 10-12B / EXHIBIT 99.1
+INFORMATION STATEMENT
+BioHealth Solutions Inc. (Registration Statement on Form 10, CIK 0001928374, File No. 0001928374-26-000005)
+
+SUMMARY INFORMATION STATEMENT — QUESTIONS AND ANSWERS ABOUT THE SEPARATION
+
+The Parent Company
+HealthCare Global Corp. ("Parent", CIK 0000882731) will distribute 100% of the outstanding shares of BioHealth Solutions Inc. ("BioHealth" or the "Company") pro rata to its shareholders.
+
+Distribution Ratio and Dates
+Each holder of HealthCare Global Corp. common stock will receive 1 share of BioHealth common stock for every 10 shares of parent common stock held as of the record date of August 15, 2026. The official distribution date is September 1, 2026. Following the distribution, 50,000,000 shares of BioHealth common stock will be outstanding. BioHealth common stock has been approved for listing on the New York Stock Exchange under the ticker symbol "BHSL".
+
+Unaudited Pro Forma Combined Financial Statements
+For the fiscal year ended December 31, 2025, Unaudited Pro Forma Combined Net Income was $140,000,000.
+For the fiscal year ended December 31, 2025, Unaudited Pro Forma Depreciation and Amortization was $35,000,000.
+For the fiscal year ended December 31, 2025, Unaudited Pro Forma Capital Expenditures was $25,000,000.
+
+Historical Combined Financial Statements
+For the fiscal year ended December 31, 2024, Historical Combined Net Income was $125,000,000.
+For the fiscal year ended December 31, 2024, Historical Combined Depreciation and Amortization was $30,000,000.
+For the fiscal year ended December 31, 2024, Historical Combined Capital Expenditures was $20,000,000.
+
+Financing Arrangements and Separation Agreements
+In connection with the separation, BioHealth completed debt financing consisting of senior notes yielding debt raised of $120,000,000.
+Pursuant to the Separation and Distribution Agreement, BioHealth transferred cash distributed to parent of $115,000,000 as a dividend distribution immediately prior to the effective time of the spinoff.
+
+Description of Material Indebtedness
+BioHealth entered into a senior secured revolving credit facility providing credit facility capacity of $50,000,000, of which $0 was drawn as of the distribution date.
+
+Tax Matters and Covenants
+Under the Tax Matters Agreement, the distribution is intended to qualify as tax-free under Section 355 of the Internal Revenue Code. The agreement restricts the Company from undertaking share buybacks, certain equity issuances, or fundamental corporate restructuring for a period of 24 months post-distribution to preserve tax-free status.
+Parent liabilities pushed into the spinoff: looked in Environmental and Legal Liabilities sections, found none.
+Credit facility restrictions: covenants require maintaining a minimum interest coverage ratio of 3.0x and leverage ratio below 2.5x.
+
+The Parent After the Spin
+Following the separation, HealthCare Global Corp. retains zero equity ownership in BioHealth Solutions Inc. The parent will focus exclusively on large-molecule pharmaceuticals, having transferred the specialty medical devices unit to BioHealth.

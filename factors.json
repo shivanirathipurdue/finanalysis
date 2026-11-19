@@ -1,0 +1,40 @@
+{
+  "window_days": 180,
+  "factors": [
+    {
+      "name": "size_relative_to_parent",
+      "direction": "smaller_is_better",
+      "weight": 0.25,
+      "chapter": "Greenblatt (1997) Ch. 3 / Klarman (1991) Ch. 10",
+      "rationale": "Small market cap relative to parent causes parent institutional holders to dump shares due to minimum position size rules."
+    },
+    {
+      "name": "initial_weakness",
+      "direction": "smaller_is_better",
+      "weight": 0.20,
+      "chapter": "Greenblatt (1997) Ch. 3",
+      "rationale": "Share price weakness in first weeks confirms forced institutional selling is underway, depressing price below fundamental value."
+    },
+    {
+      "name": "insider_buying",
+      "direction": "higher_is_better",
+      "weight": 0.25,
+      "chapter": "Greenblatt (1997) Ch. 3",
+      "rationale": "Form 4 transaction code P (open-market purchase) proves insiders are investing personal capital at market prices."
+    },
+    {
+      "name": "analyst_neglect",
+      "direction": "smaller_is_better",
+      "weight": 0.15,
+      "chapter": "Klarman (1991) Ch. 10",
+      "rationale": "Few or zero Wall Street analysts covering the spinoff ensures low market attention and pricing inefficiency."
+    },
+    {
+      "name": "absolute_market_cap",
+      "direction": "smaller_is_better",
+      "weight": 0.15,
+      "chapter": "Klarman (1991) Ch. 10",
+      "rationale": "Small absolute capitalization falls below institutional thresholds, generating structural mispricing."
+    }
+  ]
+}

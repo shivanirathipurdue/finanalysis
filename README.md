@@ -125,3 +125,34 @@ A zero-dependency browser application that enables interactive execution, live n
 python ui.py
 ```
 Opens in your browser at `http://127.0.0.1:8501`.
+
+---
+
+## 7. Week 4 — Skills, The Hook, and Team Ownership
+
+### Team Ownership Declaration
+> **Our team owns the Graham Net Current Asset Value (NCAV) Second Seeker (`ncav_seeker.py`), implementing Chapter 15 of Benjamin Graham's *The Intelligent Investor* (1973) to discover bargain equities trading at or below two-thirds (66.7%) of net current asset value from our desk's audited fact files.**
+
+### Implemented Skills & Commands
+1. **The Spinoff Seeker Skill (`seeker.py`)**:
+   - Searches EDGAR from `--start-date`, generates `registry.json`, drops non-spinoffs, prices post-distribution close with `closes_reader.py`, and ranks screen by declared factors in `factors.json`.
+   - Command: `python seeker.py --start-date 2025-11-01`
+   - Unit tests: `python test_seeker.py` (6 of 6 tests passing).
+
+2. **The Worksheet Skill (`worksheet.py`)**:
+   - Works one screened spinoff (`BHSL`) through Teaching 4's standardized 8-part worksheet.
+   - Computes Owner Cash Flow and Low/Mid Value Range deterministically in code with printed arithmetic.
+   - Evaluates client purchase size ($500,000) against median daily dollar volume.
+   - Applies investor persona judgment (`roles/investor_persona.md`) and ends with `"screens, not recommendations"`.
+   - Command: `python worksheet.py BHSL_20261110_160000`
+
+3. **The Enforcement Hook (`hook.py`)**:
+   - Reads the saved worksheet output directly and verifies every claim against filings, facts, computations, and reader.
+   - Refuses "done" (non-zero exit code) on any discrepancy and prints the failing line.
+   - Command: `python hook.py BHSL_20261110_160000/worksheet.md`
+   - Seeded error verification: `python test_hook.py` (clean passes silently; +$1 error refused).
+
+4. **The Graham NCAV Second Seeker (`ncav_seeker.py`)**:
+   - Screens balance sheet current assets against total liabilities and compares against market price.
+   - Command: `python ncav_seeker.py`
+

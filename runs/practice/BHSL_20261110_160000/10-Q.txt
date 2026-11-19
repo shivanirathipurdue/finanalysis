@@ -1,0 +1,22 @@
+SECURITIES AND EXCHANGE COMMISSION
+Washington, D.C. 20549
+FORM 10-Q
+QUARTERLY REPORT PURSUANT TO SECTION 13 OR 15(d) OF THE SECURITIES EXCHANGE ACT OF 1934
+For the quarterly period ended September 30, 2026
+Commission File Number: 001-41982
+BioHealth Solutions Inc. (CIK 0001928374, File No. 0001928374-26-000020)
+
+PART I — FINANCIAL INFORMATION
+Item 1. Financial Statements
+Condensed Consolidated Statements of Operations (Reported after the spin)
+For the period from September 1, 2026 through September 30, 2026:
+Revenues: $48,200,000
+Operating Income: $15,100,000
+Net Income: $11,800,000
+
+Condensed Consolidated Statements of Cash Flows (Reported after the spin)
+Net Cash Provided by Operating Activities: $16,400,000
+Capital Expenditures: $2,800,000
+
+Management's Discussion and Analysis
+Operating results for the month ended September 30, 2026 reflect standalone operations following the separation from HealthCare Global Corp. on September 1, 2026. Standalone corporate overhead expenses aligned with pro forma expectations.
