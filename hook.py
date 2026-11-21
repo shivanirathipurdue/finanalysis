@@ -37,52 +37,59 @@ def parse_dollar(val_str: str) -> float:
 def check_printed_arithmetic(line: str) -> Optional[str]:
     """
     Check if a line contains printed arithmetic (e.g. A + B - C = D or A * B = C or A / B = C)
-    and verify that the equality holds.
+    and verify that the equality holds. Supports percentages and compound expressions.
     """
-    # 1. Addition / Subtraction chain: e.g. After-Tax Earnings ($140,000,000.00) + D&A ($35,000,000.00) - CapEx ($25,000,000.00) = $150,000,000.00
-    if "=" in line:
-        parts = line.split("=")
-        rhs_str = parts[-1].strip()
-        lhs_str = "=".join(parts[:-1]).strip()
+    if "=" not in line:
+        return None
 
-        # If line has a colon (like a markdown bullet '- Label: Arithmetic = Result'), take portion after colon
-        if ":" in lhs_str:
-            lhs_str = lhs_str.split(":", 1)[1].strip()
+    parts = line.split("=")
+    rhs_str = parts[-1].strip()
+    lhs_str = "=".join(parts[:-1]).strip()
 
-        # Extract RHS dollar or float amount
-        rhs_match = re.search(r"(\$?[0-9,]+(?:\.[0-9]+)?)", rhs_str)
-        if not rhs_match:
-            return None
-        expected_rhs = parse_dollar(rhs_match.group(1))
+    # If line has colons (like a markdown bullet or nested quotes), take portion after the last colon before the equals sign
+    if ":" in lhs_str:
+        lhs_str = lhs_str.rsplit(":", 1)[-1].strip()
 
-        # Check for multiplication: e.g. 6.0 * $150,000,000.00 or shares: 50,000,000 * close: $14.20
-        if "*" in lhs_str:
-            factors = re.findall(r"(\$?[0-9,]+(?:\.[0-9]+)?)", lhs_str)
-            if len(factors) >= 2:
-                # take last two numbers before '='
-                f1 = parse_dollar(factors[-2])
-                f2 = parse_dollar(factors[-1])
-                calc = f1 * f2
-                if abs(calc - expected_rhs) > 0.05:
-                    return f"Multiplication mismatch: {f1} * {f2} = {calc:.2f}, but line states {expected_rhs:.2f}"
-                return None
+    # Skip lines where arithmetic is not intended (e.g. key=value or N/A)
+    if "N/A" in lhs_str or "N/A" in rhs_str:
+        return None
 
-        # Check for division: e.g. $150,000,000.00 / 50,000,000 shares = $3.00
-        if "/" in lhs_str:
-            terms = re.findall(r"(\$?[0-9,]+(?:\.[0-9]+)?)", lhs_str)
-            if len(terms) >= 2:
-                num = parse_dollar(terms[-2])
-                den = parse_dollar(terms[-1])
-                if den != 0:
-                    calc = num / den
-                    if abs(calc - expected_rhs) > 0.02:
-                        return f"Division mismatch: {num} / {den} = {calc:.2f}, but line states {expected_rhs:.2f}"
-                    return None
+    is_pct = "%" in rhs_str
 
-        # Check for Addition / Subtraction chain of dollar amounts:
-        # e.g. After-Tax Earnings ($140,000,000.00) + D&A ($35,000,000.00) - CapEx ($25,000,000.00)
-        clean_lhs = re.sub(r"\bAfter-Tax\b", "After_Tax", lhs_str, flags=re.IGNORECASE)
-        chain_matches = list(re.finditer(r"(?:^|(\s[+-]\s))[^$]*\$([0-9,]+(?:\.[0-9]+)?)", clean_lhs))
+    # Extract RHS dollar or float amount
+    rhs_match = re.search(r"(\$?[0-9,]+(?:\.[0-9]+)?)", rhs_str)
+    if not rhs_match:
+        return None
+    expected_rhs = parse_dollar(rhs_match.group(1))
+
+    # Clean LHS expression: remove commas, currency signs, and words
+    clean = re.sub(r"\bAfter-Tax\b", "After_Tax", lhs_str, flags=re.IGNORECASE)
+    clean = re.sub(r"\bpro forma\b", "", clean, flags=re.IGNORECASE)
+    clean = clean.replace("$", "").replace(",", "")
+    # Remove isolated parentheses around single numbers e.g. (140000001.00) -> 140000001.00
+    clean = re.sub(r"\(([0-9\.]+)\)", r"\1", clean)
+
+    # Retain only mathematical characters: digits, decimal, operators, parentheses
+    math_expr = re.sub(r"[^\d\.\+\-\*\/\(\)]", " ", clean)
+    math_expr = re.sub(r"\s+", " ", math_expr).strip()
+
+    if not math_expr or not any(op in math_expr for op in ["+", "-", "*", "/"]):
+        return None
+
+    try:
+        calc_val = eval(math_expr, {"__builtins__": None}, {})
+        if is_pct:
+            calc_pct = calc_val * 100.0
+            # Allow comparison either as percentage (3.85) or raw ratio (0.0385)
+            if abs(calc_pct - expected_rhs) > 0.05 and abs(calc_val - expected_rhs) > 0.05:
+                return f"Arithmetic mismatch: {math_expr} = {calc_pct:.2f}%, but line states {expected_rhs:.2f}%"
+        else:
+            if abs(calc_val - expected_rhs) > 0.05:
+                return f"Arithmetic mismatch: {math_expr} = {calc_val:.2f}, but line states {expected_rhs:.2f}"
+        return None
+    except Exception:
+        # If expression cannot be cleanly parsed, fallback to chain addition
+        chain_matches = list(re.finditer(r"(?:^|(\s[+-]\s))[^$]*\$([0-9,]+(?:\.[0-9]+)?)", clean))
         if len(chain_matches) >= 2:
             running_sum = 0.0
             for m in chain_matches:
@@ -95,9 +102,7 @@ def check_printed_arithmetic(line: str) -> Optional[str]:
                     running_sum += val
             if abs(running_sum - expected_rhs) > 0.05:
                 return f"Addition/subtraction mismatch: calculated sum {running_sum:.2f}, but line states {expected_rhs:.2f}"
-            return None
-
-    return None
+        return None
 
 
 def verify_worksheet(worksheet_path: Path) -> Tuple[bool, List[str]]:
@@ -169,6 +174,9 @@ def verify_worksheet(worksheet_path: Path) -> Tuple[bool, List[str]]:
             amt_no_dec = f"{int(amt):,}"
             tag_name = f_info.get("tag", "")
 
+            if "not applicable" in line.lower():
+                continue
+
             # If line mentions this fact name and holds a dollar figure
             if fact_key.lower() in line.lower() and "$" in line:
                 # Disambiguate historical vs pro forma vs quarterly
@@ -182,6 +190,9 @@ def verify_worksheet(worksheet_path: Path) -> Tuple[bool, List[str]]:
 
                 # Find all dollar amounts in line
                 found_dollars = [parse_dollar(d) for d in re.findall(r"\$([0-9,]+(?:\.[0-9]+)?)", line)]
+                if not found_dollars:
+                    continue
+
                 # If neither the exact amount nor the calculated total matches
                 if amt not in found_dollars and not any(abs(d - amt) < 0.05 for d in found_dollars):
                     # Check if it was an arithmetic line where inputs were present
@@ -189,7 +200,7 @@ def verify_worksheet(worksheet_path: Path) -> Tuple[bool, List[str]]:
                         errors.append(f"Line {line_idx}: Fact '{fact_key}' mismatch: expected ${amt_fmt} from facts.json (tag: {tag_name}), not found in '{line}'")
 
         # Check 4: Filing line citations against saved filing text
-        if "form 10" in line.lower() or "form 4" in line.lower() or "10-q" in line.lower():
+        if ("form 10" in line.lower() or "form 4" in line.lower() or "10-q" in line.lower()) and "not applicable" not in line.lower():
             # Extract claimed numbers (e.g. debt raised, cash to parent, purchases)
             dollar_matches = re.findall(r"\$([0-9,]+(?:\.[0-9]+)?)", line)
             for d_str in dollar_matches:

@@ -67,15 +67,20 @@ def load_run_data(run_folder_name: str) -> Dict[str, Any]:
         with open(marks_file, "r", encoding="utf-8") as f:
             data["marks"] = f.read()
 
-    verified_report_file = run_dir / "verified_report.md"
-    if verified_report_file.exists():
-        with open(verified_report_file, "r", encoding="utf-8") as f:
+    final_report_file = run_dir / "final_report.md"
+    if final_report_file.exists():
+        with open(final_report_file, "r", encoding="utf-8") as f:
             data["report"] = f.read()
     else:
-        report_file = run_dir / "report.md"
-        if report_file.exists():
-            with open(report_file, "r", encoding="utf-8") as f:
+        verified_report_file = run_dir / "verified_report.md"
+        if verified_report_file.exists():
+            with open(verified_report_file, "r", encoding="utf-8") as f:
                 data["report"] = f.read()
+        else:
+            report_file = run_dir / "report.md"
+            if report_file.exists():
+                with open(report_file, "r", encoding="utf-8") as f:
+                    data["report"] = f.read()
 
     io_file = run_dir / "node_io.json"
     if io_file.exists():
@@ -89,29 +94,35 @@ def load_run_data(run_folder_name: str) -> Dict[str, Any]:
 
 
 def run_agent_team_worker(ticker: str, peers: List[str], price: Optional[float]):
-    """Background worker executing the 6-node deterministic agent team graph."""
+    """Background worker executing the unified One Desk pipeline."""
     global RUN_STATE
     RUN_STATE["status"] = "running"
-    RUN_STATE["logs"] = [f"Starting Agent Team Graph for ticker: {ticker.upper()}"]
+    RUN_STATE["logs"] = [f"Starting One Desk execution for target: {ticker.upper()}"]
     RUN_STATE["current_node"] = "steps"
 
     try:
-        desk = desk_app.EquityResearchAgentTeam(ticker=ticker, peers=peers, price=price)
-        RUN_STATE["logs"].append("Node 1: steps (SEC EDGAR & Facts Calculation)")
-        RUN_STATE["current_node"] = "research_analyst"
-        
-        # Run graph
-        verified_file = desk.run_graph()
-        work_dir = verified_file.parent
+        import desk
+        unified_desk = desk.UnifiedDesk(target_arg=ticker)
+        RUN_STATE["logs"].append("Step 1: Screen & Pick Determination")
+        RUN_STATE["logs"].append("Step 2: Run Folder Setup (Contract)")
+        RUN_STATE["logs"].append("Step 3: Filing Ingestion (Single-Fetch Guarantee)")
+        RUN_STATE["logs"].append("Step 4: Agent Team Graph Execution (Roles 1 to 6)")
+        RUN_STATE["logs"].append("Step 5: Spinoff Worksheet Skill Execution")
+        RUN_STATE["logs"].append("Step 6: Final Report Assembly & The Hook Guard")
+
+        final_file = unified_desk.execute_pipeline()
+        work_dir = final_file.parent
 
         RUN_STATE["last_run_dir"] = work_dir.name
         RUN_STATE["status"] = "completed"
         RUN_STATE["current_node"] = "completed"
-        RUN_STATE["logs"].append(f"Graph completed successfully. Run folder: {work_dir.name}")
+        for step_name, dur in unified_desk.timing_log.items():
+            RUN_STATE["logs"].append(f"  • {step_name}: {dur:.2f}s")
+        RUN_STATE["logs"].append(f"One Desk execution completed successfully in {sum(unified_desk.timing_log.values()):.2f}s!")
         RUN_STATE["result"] = load_run_data(work_dir.name)
     except Exception as e:
         RUN_STATE["status"] = "error"
-        RUN_STATE["logs"].append(f"Error during execution: {str(e)}")
+        RUN_STATE["logs"].append(f"Error during One Desk execution: {str(e)}")
         RUN_STATE["current_node"] = "error"
 
 

@@ -107,6 +107,53 @@ def build_worksheet(run_dir: Path, config_path: Path, persona_path: Path, regist
     registry = load_json(registry_path)
     in_registry = any(r.get("ticker", "").strip().upper() == ticker for r in registry) if isinstance(registry, list) else False
 
+    # If not in registry, print 'not applicable' for spinoff parts as required by Week 5 syllabus
+    if not in_registry:
+        lines = [
+            f"# {company_name} ({ticker}): spinoff worksheet",
+            "Screens to look at, not a recommendation.",
+            "",
+            "## Facts",
+            "- Parent company: not applicable",
+            "- Distribution date and ratio: not applicable",
+            "- Price on price date: not applicable",
+            "- Market value: not applicable",
+            "- Index membership: not applicable",
+            "- Investment window ends: not applicable",
+            "- Seeker rank and points: not applicable",
+            "",
+            "## Why it may be cheap",
+            "not applicable (company is not an EDGAR registered spinoff in the investment window)",
+            "",
+            "## Value range",
+            "- not applicable",
+            "",
+            "## What the parent pushed into it",
+            "- not applicable",
+            "",
+            "## The parent after the spin",
+            "- not applicable",
+            "",
+            "## Insiders and catalysts",
+            "- not applicable",
+            "",
+            "## Can you buy it",
+            "- not applicable",
+            "",
+            "## Not known",
+            "- not applicable",
+            "",
+            "## View on Release",
+            "- Directional view: not applicable",
+            "- Decisive number: not applicable",
+            "- Conviction: not applicable",
+            "- The judgment: not applicable",
+            "- Invalidation trigger: not applicable",
+            "",
+            "screens, not recommendations"
+        ]
+        return "\n".join(lines).strip() + "\n"
+
     # Load config
     config = load_json(config_path)
     client_purchase_size = float(config.get("client_purchase_size", 500000.0))
@@ -195,7 +242,7 @@ def build_worksheet(run_dir: Path, config_path: Path, persona_path: Path, regist
 
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    # Assemble Worksheet Markdown
+    # Assemble Worksheet Markdown for Spinoffs
     lines = [
         f"# {company_name} ({ticker}): spinoff worksheet, {price_date}",
         "Screens to look at, not a recommendation.",

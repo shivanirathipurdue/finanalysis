@@ -556,17 +556,23 @@ def step_5_calculator(facts: Dict[str, Dict[str, Any]], price: Optional[float] =
     print("STEP 5: FINANCIAL RATIOS & CALCULATOR (WITH ARITHMETIC)")
     print("=" * 80)
 
-    rev_cur = facts.get("Total Revenue", {}).get("current_val")
+    # Handle nested facts dict
+    if "target" in facts and "facts" in facts["target"]:
+        facts = facts["target"]["facts"]
+    elif "facts" in facts and isinstance(facts["facts"], dict):
+        facts = facts["facts"]
+
+    rev_cur = facts.get("Total Revenue", {}).get("current_val", facts.get("Total Revenue", {}).get("amount"))
     rev_prior = facts.get("Total Revenue", {}).get("prior_val")
-    op_inc = facts.get("Operating Income", {}).get("current_val")
-    net_inc = facts.get("Net Income", {}).get("current_val")
-    eps = facts.get("Diluted EPS", {}).get("current_val")
-    eq_cur = facts.get("Stockholders' Equity", {}).get("current_val")
+    op_inc = facts.get("Operating Income", {}).get("current_val", facts.get("Operating Income", {}).get("amount"))
+    net_inc = facts.get("Net Income", {}).get("current_val", facts.get("Net Income", {}).get("amount"))
+    eps = facts.get("Diluted EPS", {}).get("current_val", facts.get("Diluted EPS", {}).get("amount"))
+    eq_cur = facts.get("Stockholders' Equity", {}).get("current_val", facts.get("Stockholders' Equity", {}).get("amount"))
     eq_prior = facts.get("Stockholders' Equity", {}).get("prior_val")
-    lt_debt = facts.get("Long-Term Debt", {}).get("current_val") or 0.0
+    lt_debt = facts.get("Long-Term Debt", {}).get("current_val", facts.get("Long-Term Debt", {}).get("amount")) or facts.get("Debt Raised", {}).get("amount", 0.0)
     cur_debt = facts.get("Current Portion LT Debt", {}).get("current_val") or 0.0
-    cfo = facts.get("Cash from Operations", {}).get("current_val")
-    capex = facts.get("Additions to PPE", {}).get("current_val")
+    cfo = facts.get("Cash from Operations", {}).get("current_val", facts.get("Cash from Operations", {}).get("amount"))
+    capex = facts.get("Additions to PPE", {}).get("current_val", facts.get("Capital Expenditures", {}).get("amount"))
 
     results = {}
 
@@ -721,6 +727,10 @@ def step_7_peers(
     print("=" * 80)
     print("STEP 7: PEER COMPARISON (XBRL FACTS & OPERATING MARGIN ON SAME DEFINITION)")
     print("=" * 80)
+
+    if not peers:
+        print("No peers requested; peer comparison step omitted.")
+        return []
 
     # SEC tickers map for fast lookup
     resp = sec_get("https://www.sec.gov/files/company_tickers.json", user_agent)

@@ -51,6 +51,6 @@ Following Greenblatt (1997, Ch. 3), BHSL exhibits classic non-fundamental sellin
 - Decisive number: Low Case Value $18.00 per share vs prevailing price $14.20 (Form 10 Unaudited Pro Forma Financial Statements & arithmetic)
 - Conviction level: Low (Rule: High if price is > 25% below low-case value per share; discount was 21.11%)
 - What would change the view: The investment thesis would be invalidated if the subsequent 10-Q filing demonstrates that standalone corporate overhead expenses, standalone borrowing interest, or working capital requirements compress Owner Cash Flow below $120,000,000.00, or if insider Form 4 disclosures reverse from net open-market buying (Code P) to net insider liquidation.
-- Worksheet generation timestamp: 2026-11-19 08:41:53
+- Worksheet generation timestamp: 2026-11-21 11:44:13
 
 screens, not recommendations

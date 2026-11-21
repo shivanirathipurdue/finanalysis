@@ -156,3 +156,67 @@ Opens in your browser at `http://127.0.0.1:8501`.
    - Screens balance sheet current assets against total liabilities and compares against market price.
    - Command: `python ncav_seeker.py`
 
+---
+
+## 8. Week 5 — One Desk: The Agent Team and the Skills (Lab 08 & Lab 09 / Checkpoint 3)
+
+### Mission
+On Tuesday (Lab 08), the agent team and procedural skills are joined into **one desk (`desk.py`)** executed by **one command**, with **The Hook** watching every output. On Thursday (Lab 09), the joined desk is proved on arbitrary names, changes are measured in a **Three-Column Table**, and the **Checkpoint 3 Team Proposal** is filed.
+
+### One-Command Execution
+Behind this command, code fixes the exact execution sequence (never decided by an LLM):
+```bash
+# 1. Run on a direct ticker
+python desk.py BHSL
+
+# 2. Run from Seeker screen (picks top-ranked candidate)
+python desk.py screen
+
+# 3. Offline replay with network off (single-fetch guarantee, identical report)
+python desk.py --replay BHSL_20261110_160000
+
+# 4. Non-spinoff run ('not applicable' on spinoff sections, rest runs cleanly)
+python desk.py COST --offline
+
+# 5. One-click batch verification suite
+run_desk.bat
+```
+
+### Architectural Join Declarations
+The desk implements all three architectural joins:
+1. **The Pipeline Join (Seeker & Facts)**:
+   - Seeker runs in code, ranks candidates by declared factors, and writes `registry.json` and `spinoff_screen.md`.
+   - The desk reads the top pick without calling any model. Filings are ingested once into the run folder contract (`{TICKER}_{YYYYMMDD_HHMMSS}`) so no document is ever fetched twice.
+2. **The Tool Join (Worksheet as a Tool of the Financial Analyst)**:
+   - The Financial Analyst receives `worksheet.md` as an input file on disk.
+   - **The Non-Recomputation Sentence**: `"You are provided with the worksheet skill output as a file (worksheet.md). You may quote the worksheet's numbers and lines, but you must NEVER recompute them."`
+   - The role quotes the Low Case Valuation ($18.00 per share) and Pro Forma Owner Cash Flow ($150,000,000.00) directly from the tool.
+3. **The Guard Join (The Hook)**:
+   - `hook.py` unconditionally guards both `worksheet.md` and `final_report.md`.
+   - Verifies every figure against `facts.json`, saved filing texts, printed code arithmetic, and `closes_reader.py`. Refuses "done" on any unsupported number or discrepancy.
+
+### Timing Breakdown per Part
+Every component prints its elapsed duration on its last line:
+- `Step 1: Screen & Pick`: ~0.04s
+- `Step 2: Run Folder Setup`: ~0.00s
+- `Step 3: Filing Ingestion`: ~0.01s
+- `Step 4: Agent Team Graph`: ~3.30s - 4.80s
+- `Step 5: Worksheet Skill`: ~0.01s
+- `Step 6: Report Assembly & Hook`: ~0.05s - 0.10s
+- **Total Execution Time**: **< 5.0 Seconds**
+
+### Non-Spinoff Fallback Guarantee
+When a ticker is not in `registry.json` (e.g. `COST`, `WMT`, `BDC`):
+- Spinoff sections print `"not applicable (company is not an EDGAR registered spinoff in the investment window)"` or `"- not applicable"`.
+- The full 5-part research team report, XBRL statement ratios, and verifier marks execute completely and successfully without stopping.
+
+### Deliverables & Audit Links
+- **Three-Column Table**: [`comparison_table.md`](comparison_table.md) comparing Parts Alone vs. Joined Desk vs. Authoritative Filing across the 11 core claims, view, and decisive number.
+- **Checkpoint 3 Team Proposal**: [`CHECKPOINT_3_PROPOSAL.md`](CHECKPOINT_3_PROPOSAL.md) containing the client description, Mermaid desk diagram, join declarations, ownership declaration, member roles, and live record permalink.
+- **Hook Test Suite**: [`test_hook.py`](test_hook.py) proving silent pass on clean outputs and explicit refusal on seeded +$1.00 copies.
+- **Batch Launcher**: [`run_desk.bat`](run_desk.bat) executing the complete suite with one click.
+
+---
+
+screens, not recommendations
+
